@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Sign Up - MsituMum</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;700;900&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ec13",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#102210",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24
+        }
+        body {
+            position: relative
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuAEa7kTg9AoW2hE9la5mPnto5fVQdTYYgJtL2FjdsOC_kSZw5-hTCaQSzPTeXSdUz7p7qDXlF3KN5rtIY79vI9pKGxJ-kHpLfgMi45Sn9L6Jt1M0S6RoX89m43dax9dqQUSz_muuMpiH_czoefWBpDZ0Q9ty1iSB3e_hF0F4YSwm5fYbjDGTAaSs3TY2Cr2mQF0RpFamnXkX-FJ18PxeCXVTSyswuCw6FMAvlHXBEjA_rF7j5WS1AxdP4JB1I7u20Xuf74cQ0kSsQ);
+            background-size: cover;
+            background-position: center;
+            filter: blur(4px) brightness(0.9);
+            z-index: -1
+        }
+    </style>
+</head>
+<body class="font-display">
+    <div class="relative flex min-h-screen w-full flex-col items-center justify-center bg-background-light/80 p-4 dark:bg-background-dark/80">
+        <div class="flex w-full max-w-lg flex-col gap-8 rounded-xl bg-background-light p-6 shadow-2xl dark:bg-background-dark sm:p-10">
+            <header class="flex items-center justify-center gap-4 text-center text-[#333333] dark:text-white">
+                <svg class="h-8 w-8 text-[#3A6B35]" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M13.8261 30.5736C16.7203 29.8826 20.2244 29.4783 24 29.4783C27.7756 29.4783 31.2797 29.8826 34.1739 30.5736C36.9144 31.2278 39.9967 32.7669 41.3563 33.8352L24.8486 7.36089C24.4571 6.73303 23.5429 6.73303 23.1514 7.36089L6.64374 33.8352C8.00331 32.7669 11.0856 31.2278 13.8261 30.5736Z" fill="currentColor"></path>
+                    <path clip-rule="evenodd" d="M39.998 35.764C39.9944 35.7463 39.9875 35.7155 39.9748 35.6706C39.9436 35.5601 39.8949 35.4259 39.8346 35.2825C39.8168 35.2403 39.7989 35.1993 39.7813 35.1602C38.5103 34.2887 35.9788 33.0607 33.7095 32.5189C30.9875 31.8691 27.6413 31.4783 24 31.4783C20.3587 31.4783 17.0125 31.8691 14.2905 32.5189C12.0012 33.0654 9.44505 34.3104 8.18538 35.1832C8.17384 35.2075 8.16216 35.233 8.15052 35.2592C8.09919 35.3751 8.05721 35.4886 8.02977 35.589C8.00356 35.6848 8.00039 35.7333 8.00004 35.7388C8.00004 35.739 8 35.7393 8.00004 35.7388C8.00004 35.7641 8.0104 36.0767 8.68485 36.6314C9.34546 37.1746 10.4222 37.7531 11.9291 38.2772C14.9242 39.319 19.1919 40 24 40C28.8081 40 33.0758 39.319 36.0709 38.2772C37.5778 37.7531 38.6545 37.1746 39.3151 36.6314C39.9006 36.1499 39.9857 35.8511 39.998 35.764ZM4.95178 32.7688L21.4543 6.30267C22.6288 4.4191 25.3712 4.41909 26.5457 6.30267L43.0534 32.777C43.0709 32.8052 43.0878 32.8338 43.104 32.8629L41.3563 33.8352C43.104 32.8629 43.1038 32.8626 43.104 32.8629L43.1051 32.865L43.1065 32.8675L43.1101 32.8739L43.1199 32.8918C43.1276 32.906 43.1377 32.9246 43.1497 32.9473C43.1738 32.9925 43.2062 33.0545 43.244 33.1299C43.319 33.2792 43.4196 33.489 43.5217 33.7317C43.6901 34.1321 44 34.9311 44 35.7391C44 37.4427 43.003 38.7775 41.8558 39.7209C40.6947 40.6757 39.1354 41.4464 37.385 42.0552C33.8654 43.2794 29.133 44 24 44C18.867 44 14.1346 43.2794 10.615 42.0552C8.86463 41.4464 7.30529 40.6757 6.14419 39.7209C4.99695 38.7775 3.99999 37.4427 3.99999 35.7391C3.99999 34.8725 4.29264 34.0922 4.49321 33.6393C4.60375 33.3898 4.71348 33.1804 4.79687 33.0311C4.83898 32.9556 4.87547 32.8935 4.9035 32.8471C4.91754 32.8238 4.92954 32.8043 4.93916 32.7889L4.94662 32.777L4.95178 32.7688ZM35.9868 29.004L24 9.77997L12.0131 29.004C12.4661 28.8609 12.9179 28.7342 13.3617 28.6282C16.4281 27.8961 20.0901 27.4783 24 27.4783C27.9099 27.4783 31.5719 27.8961 34.6383 28.6282C35.082 28.7342 35.5339 28.8609 35.9868 29.004Z" fill="currentColor" fill-rule="evenodd"></path>
+                </svg>
+                <h2 class="text-3xl font-bold tracking-tight">MsituMum</h2>
+            </header>
+            <div class="flex flex-col gap-2 text-center">
+                <p class="text-3xl font-black leading-tight tracking-[-0.033em] text-[#333333] dark:text-white">Start Your Restoration Journey</p>
+                <p class="text-base font-normal leading-normal text-[#3A6B35]">Create an account to begin.</p>
+            </div>
+            <div id="errorMessage" class="hidden bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg"></div>
+            <form id="registerForm" class="flex flex-col gap-6">
+                <label class="flex flex-col">
+                    <p class="pb-2 text-sm font-medium leading-normal text-[#333333] dark:text-white">Full Name</p>
+                    <input id="full_name" class="form-input flex h-12 w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg border border-gray-300 bg-[#F4F4F2] p-3 text-base font-normal leading-normal text-[#333333] placeholder:text-gray-500 focus:border-[#3A6B35] focus:outline-0 focus:ring-2 focus:ring-[#3A6B35]/40 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:placeholder:text-gray-400" placeholder="e.g., Jane Doe" type="text" required/>
+                </label>
+                <label class="flex flex-col">
+                    <p class="pb-2 text-sm font-medium leading-normal text-[#333333] dark:text-white">Username</p>
+                    <input id="username" class="form-input flex h-12 w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg border border-gray-300 bg-[#F4F4F2] p-3 text-base font-normal leading-normal text-[#333333] placeholder:text-gray-500 focus:border-[#3A6B35] focus:outline-0 focus:ring-2 focus:ring-[#3A6B35]/40 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:placeholder:text-gray-400" placeholder="Choose a username" type="text" required/>
+                </label>
+                <label class="flex flex-col">
+                    <p class="pb-2 text-sm font-medium leading-normal text-[#333333] dark:text-white">Email Address</p>
+                    <input id="email" class="form-input flex h-12 w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg border border-gray-300 bg-[#F4F4F2] p-3 text-base font-normal leading-normal text-[#333333] placeholder:text-gray-500 focus:border-[#3A6B35] focus:outline-0 focus:ring-2 focus:ring-[#3A6B35]/40 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:placeholder:text-gray-400" placeholder="you@example.com" type="email" required/>
+                </label>
+                <label class="flex flex-col">
+                    <p class="pb-2 text-sm font-medium leading-normal text-[#333333] dark:text-white">Password</p>
+                    <div class="relative flex w-full flex-1 items-stretch">
+                        <input id="password" class="form-input flex h-12 w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg rounded-r-none border border-r-0 border-gray-300 bg-[#F4F4F2] p-3 text-base font-normal leading-normal text-[#333333] placeholder:text-gray-500 focus:border-[#3A6B35] focus:outline-0 focus:ring-2 focus:ring-[#3A6B35]/40 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:placeholder:text-gray-400" placeholder="Enter your password" type="password" required/>
+                        <div id="togglePassword" class="flex cursor-pointer items-center justify-center rounded-r-lg border border-l-0 border-gray-300 bg-[#F4F4F2] px-3 text-gray-500 hover:text-[#3A6B35] dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:text-[#3A6B35]">
+                            <span class="material-symbols-outlined text-2xl">visibility</span>
+                        </div>
+                    </div>
+                </label>
+                <label class="flex flex-col">
+                    <p class="pb-2 text-sm font-medium leading-normal text-[#333333] dark:text-white">Your Role</p>
+                    <div class="relative flex w-full items-center">
+                        <select id="role" class="form-select flex h-12 w-full min-w-0 flex-1 appearance-none resize-none overflow-hidden rounded-lg border border-gray-300 bg-[#F4F4F2] p-3 text-base font-normal leading-normal text-[#333333] focus:border-[#3A6B35] focus:outline-0 focus:ring-2 focus:ring-[#3A6B35]/40 dark:border-gray-600 dark:bg-gray-800 dark:text-white" required>
+                            <option value="farmer">Farmer</option>
+                            <option value="ngo">NGO</option>
+                            <option value="donor">Donor</option>
+                            <option value="government">Government</option>
+                        </select>
+                        <span class="material-symbols-outlined pointer-events-none absolute right-3 text-gray-500 dark:text-gray-400">expand_more</span>
+                    </div>
+                </label>
+                <div class="flex items-center gap-3">
+                    <input class="form-checkbox h-5 w-5 rounded border-gray-300 text-[#3A6B35] focus:ring-[#3A6B35]/40 dark:border-gray-600 dark:bg-gray-800" id="terms-checkbox" type="checkbox" required/>
+                    <label class="text-sm text-gray-600 dark:text-gray-300" for="terms-checkbox">
+                        By signing up, you agree to our <a class="font-medium text-[#3A6B35] underline hover:text-[#3A6B35]/80" href="#">Terms of Service</a> and <a class="font-medium text-[#3A6B35] underline hover:text-[#3A6B35]/80" href="#">Privacy Policy</a>.
+                    </label>
+                </div>
+                <button type="submit" class="flex h-12 items-center justify-center rounded-lg bg-[#3A6B35] px-6 py-3 text-base font-bold text-white shadow-md transition-colors hover:bg-[#3A6B35]/90 focus:outline-none focus:ring-2 focus:ring-[#3A6B35]/50 focus:ring-offset-2 dark:focus:ring-offset-background-dark">
+                    Create Account
+                </button>
+            </form>
+            <p class="text-center text-sm text-gray-600 dark:text-gray-300">
+                Already have an account? <a class="font-medium text-[#3A6B35] hover:underline" href="/login.html">Log In</a>
+            </p>
+        </div>
+        <footer class="mt-8 text-center">
+            <p class="text-xs text-gray-600 dark:text-gray-400">
+                <a class="hover:underline" href="#">Help</a> • <a class="hover:underline" href="#">Contact Us</a>
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        document.getElementById('togglePassword')?.addEventListener('click', function() {
+            const passwordInput = document.getElementById('password');
+            const icon = this.querySelector('.material-symbols-outlined');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.textContent = 'visibility_off';
+            } else {
+                passwordInput.type = 'password';
+                icon.textContent = 'visibility';
+            }
+        });
+
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.classList.add('hidden');
+
+            const formData = {
+                username: document.getElementById('username').value,
+                email: document.getElementById('email').value,
+                password: document.getElementById('password').value,
+                role: document.getElementById('role').value,
+                full_name: document.getElementById('full_name').value
+            };
+
+            try {
+                const response = await fetch('/api/auth/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    window.location.href = '/';
+                } else {
+                    errorDiv.textContent = data.error || 'Registration failed';
+                    errorDiv.classList.remove('hidden');
+                }
+            } catch (error) {
+                errorDiv.textContent = 'Network error. Please try again.';
+                errorDiv.classList.remove('hidden');
+            }
+        });
+    </script>
+</body>
+</html>

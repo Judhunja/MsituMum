@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Nursery - MsituMum</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ec13",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#102210",
+                        "green-light": "#f0fff4",
+                        "green-medium": "#4c854c",
+                        "green-dark": "#1a3a1a",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="font-display bg-background-light">
+    <div class="min-h-screen p-4 md:p-8">
+        <div class="max-w-4xl mx-auto">
+            <!-- Header -->
+            <div class="mb-8">
+                <a href="/nursery.html" class="inline-flex items-center text-green-medium hover:text-green-dark mb-4">
+                    <span class="material-symbols-outlined mr-2">arrow_back</span>
+                    Back to Nursery Management
+                </a>
+                <h1 class="text-4xl font-black text-gray-900">Add New Nursery</h1>
+                <p class="text-gray-600 mt-2">Register a new nursery facility and its details</p>
+            </div>
+
+            <!-- Success/Error Messages -->
+            <div id="successMessage" class="hidden mb-6 bg-green-50 border border-green-200 text-green-700 px-6 py-4 rounded-lg">
+                <div class="flex items-center">
+                    <span class="material-symbols-outlined mr-2">check_circle</span>
+                    <span id="successText">Nursery added successfully!</span>
+                </div>
+            </div>
+            <div id="errorMessage" class="hidden mb-6 bg-red-50 border border-red-200 text-red-700 px-6 py-4 rounded-lg">
+                <div class="flex items-center">
+                    <span class="material-symbols-outlined mr-2">error</span>
+                    <span id="errorText"></span>
+                </div>
+            </div>
+
+            <!-- Form -->
+            <form id="nurseryForm" class="bg-white rounded-xl shadow-lg p-6 md:p-8 space-y-8">
+                <!-- Basic Information -->
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4">Basic Information</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="nursery_name" class="block text-sm font-medium text-gray-700 mb-2">
+                                Nursery Name <span class="text-red-500">*</span>
+                            </label>
+                            <input type="text" id="nursery_name" name="nursery_name" required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
+                                placeholder="e.g., Green Valley Nursery">
+                        </div>
+
+                        <div>
+                            <label for="location_name" class="block text-sm font-medium text-gray-700 mb-2">
+                                Location Name <span class="text-red-500">*</span>
+                            </label>
+                            <input type="text" id="location_name" name="location_name" required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
+                                placeholder="e.g., Nairobi, Kenya">
+                        </div>
+
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Location Coordinates
+                            </label>
+                            <div class="flex gap-4">
+                                <div class="flex-1">
+                                    <input type="number" id="latitude" name="latitude" step="0.000001" readonly
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-50"
+                                        placeholder="Latitude">
+                                </div>
+                                <div class="flex-1">
+                                    <input type="number" id="longitude" name="longitude" step="0.000001" readonly
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-50"
+                                        placeholder="Longitude">
+                                </div>
+                                <button type="button" id="getLocationBtn"
+                                    class="bg-green-medium hover:bg-green-dark text-white px-6 py-3 rounded-lg transition-colors flex items-center gap-2">
+                                    <span class="material-symbols-outlined">my_location</span>
+                                    <span>Get Location</span>
+                                </button>
+                            </div>
+                            <p id="locationStatus" class="text-sm text-gray-600 mt-2"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Capacity Information -->
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4">Capacity Information</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="total_capacity" class="block text-sm font-medium text-gray-700 mb-2">
+                                Total Capacity (seedlings) <span class="text-red-500">*</span>
+                            </label>
+                            <input type="number" id="total_capacity" name="total_capacity" required min="0"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
+                                placeholder="e.g., 10000">
+                        </div>
+
+                        <div>
+                            <label for="total_beds" class="block text-sm font-medium text-gray-700 mb-2">
+                                Number of Beds <span class="text-red-500">*</span>
+                            </label>
+                            <input type="number" id="total_beds" name="total_beds" required min="0"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
+                                placeholder="e.g., 20">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Soil Mix Composition -->
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4">Soil Analysis</h2>
+                    <div id="soilAnalysisSection" class="hidden">
+                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+                            <div class="flex items-start gap-3">
+                                <span class="material-symbols-outlined text-blue-600">info</span>
+                                <div>
+                                    <h3 class="font-semibold text-blue-900 mb-2">Recommended Soil Composition for Your Location</h3>
+                                    <p class="text-sm text-blue-800" id="soilRecommendation"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-4">Enter your soil mix composition (Total should equal 100%)</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div>
+                            <label for="soil_mix_sand_percent" class="block text-sm font-medium text-gray-700 mb-2">
+                                Sand %
+                            </label>
+                            <input type="number" id="soil_mix_sand_percent" name="soil_mix_sand_percent" min="0" max="100"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
+                                placeholder="e.g., 30">
+                        </div>
+
+                        <div>
+                            <label for="soil_mix_loam_percent" class="block text-sm font-medium text-gray-700 mb-2">
+                                Loam %
+                            </label>
+                            <input type="number" id="soil_mix_loam_percent" name="soil_mix_loam_percent" min="0" max="100"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
+                                placeholder="e.g., 40">
+                        </div>
+
+                        <div>
+                            <label for="soil_mix_compost_percent" class="block text-sm font-medium text-gray-700 mb-2">
+                                Compost %
+                            </label>
+                            <input type="number" id="soil_mix_compost_percent" name="soil_mix_compost_percent" min="0" max="100"
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
+                                placeholder="e.g., 30">
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2 mt-2">
+                        <p id="soilMixTotal" class="text-sm text-gray-600">Current total: 0%</p>
+                        <button type="button" id="applySoilRecommendation" class="hidden text-sm text-green-600 hover:text-green-700 font-medium underline">
+                            Apply Recommended Mix
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Watering & Management -->
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-900 mb-4">Watering & Management</h2>
+                    <div class="grid grid-cols-1 gap-6">
+                        <div>
+                            <label for="watering_frequency" class="block text-sm font-medium text-gray-700 mb-2">
+                                Watering Frequency <span class="text-red-500">*</span>
+                            </label>
+                            <select id="watering_frequency" name="watering_frequency" required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                                <option value="">Select watering frequency...</option>
+                                <option value="once_daily">Once Daily</option>
+                                <option value="twice_daily">Twice Daily (Morning & Evening)</option>
+                                <option value="three_times_daily">Three Times Daily</option>
+                                <option value="every_other_day">Every Other Day</option>
+                                <option value="twice_weekly">Twice Weekly</option>
+                            </select>
+                        </div>
+
+                        <div id="wateringTipsSection" class="hidden bg-green-50 border border-green-200 rounded-lg p-4">
+                            <div class="flex items-start gap-3">
+                                <span class="material-symbols-outlined text-green-600">water_drop</span>
+                                <div>
+                                    <h3 class="font-semibold text-green-900 mb-2">Watering Recommendations for Your Location</h3>
+                                    <ul class="text-sm text-green-800 space-y-1" id="wateringTipsList"></ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form Actions -->
+                <div class="flex gap-4 pt-6 border-t">
+                    <button type="submit" 
+                        class="flex-1 md:flex-initial bg-green-dark hover:bg-green-medium text-white font-bold py-3 px-8 rounded-lg transition-colors flex items-center justify-center">
+                        <span class="material-symbols-outlined mr-2">add</span>
+                        Add Nursery
+                    </button>
+                    <a href="/nursery.html" 
+                        class="flex-1 md:flex-initial bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-3 px-8 rounded-lg transition-colors text-center">
+                        Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let recommendedSoilMix = null;
+
+        // Analyze location and provide recommendations
+        async function analyzeLocation(latitude, longitude) {
+            // Simulated climate/soil analysis based on coordinates
+            // In production, this would call a real API
+            const climate = getClimateZone(latitude, longitude);
+            const soilType = getSoilType(latitude, longitude);
+            
+            // Show soil analysis
+            document.getElementById('soilAnalysisSection').classList.remove('hidden');
+            document.getElementById('wateringTipsSection').classList.remove('hidden');
+            document.getElementById('applySoilRecommendation').classList.remove('hidden');
+            
+            // Provide soil recommendations
+            const soilRec = document.getElementById('soilRecommendation');
+            if (climate === 'tropical') {
+                soilRec.textContent = 'Tropical climate detected. Recommended mix: 25% Sand, 45% Loam, 30% Compost for good drainage and nutrient retention.';
+                recommendedSoilMix = { sand: 25, loam: 45, compost: 30 };
+            } else if (climate === 'arid') {
+                soilRec.textContent = 'Arid climate detected. Recommended mix: 20% Sand, 40% Loam, 40% Compost for moisture retention.';
+                recommendedSoilMix = { sand: 20, loam: 40, compost: 40 };
+            } else if (climate === 'temperate') {
+                soilRec.textContent = 'Temperate climate detected. Recommended mix: 30% Sand, 40% Loam, 30% Compost for balanced growth.';
+                recommendedSoilMix = { sand: 30, loam: 40, compost: 30 };
+            } else {
+                soilRec.textContent = 'Standard mix recommended: 30% Sand, 40% Loam, 30% Compost.';
+                recommendedSoilMix = { sand: 30, loam: 40, compost: 30 };
+            }
+            
+            // Provide watering tips
+            const wateringTips = document.getElementById('wateringTipsList');
+            wateringTips.innerHTML = '';
+            const tips = getWateringTips(climate, soilType);
+            tips.forEach(tip => {
+                const li = document.createElement('li');
+                li.textContent = '• ' + tip;
+                wateringTips.appendChild(li);
+            });
+            
+            // Pre-select recommended watering frequency
+            const freqSelect = document.getElementById('watering_frequency');
+            if (climate === 'tropical' || climate === 'arid') {
+                freqSelect.value = 'twice_daily';
+            } else {
+                freqSelect.value = 'once_daily';
+            }
+        }
+
+        function getClimateZone(lat, lon) {
+            // Simplified climate zone detection
+            const absLat = Math.abs(lat);
+            if (absLat < 23.5) return 'tropical';
+            if (absLat > 60) return 'polar';
+            // Check for arid regions (simplified)
+            if ((lat > 15 && lat < 35) || (lat < -15 && lat > -35)) {
+                if (lon > -20 && lon < 60) return 'arid'; // Africa/Middle East
+            }
+            return 'temperate';
+        }
+
+        function getSoilType(lat, lon) {
+            // Simplified soil type detection based on region
+            if (lon > 30 && lon < 50 && lat > -5 && lat < 5) return 'clay-rich'; // East Africa
+            if (lat < 0 && lon > 20 && lon < 50) return 'sandy'; // Southern Africa
+            return 'loamy'; // Default
+        }
+
+        function getWateringTips(climate, soilType) {
+            const tips = [];
+            
+            if (climate === 'tropical') {
+                tips.push('Water twice daily during dry season (6 AM and 4 PM)');
+                tips.push('Reduce to once daily during rainy season');
+                tips.push('Ensure good drainage to prevent waterlogging');
+            } else if (climate === 'arid') {
+                tips.push('Water heavily twice daily (early morning and evening)');
+                tips.push('Use mulch to reduce evaporation');
+                tips.push('Consider drip irrigation for efficiency');
+                tips.push('Monitor soil moisture daily');
+            } else {
+                tips.push('Water once daily in the morning');
+                tips.push('Adjust based on seasonal rainfall');
+                tips.push('Check soil moisture before watering');
+            }
+            
+            if (soilType === 'sandy') {
+                tips.push('Sandy soil drains quickly - water more frequently but in smaller amounts');
+            } else if (soilType === 'clay-rich') {
+                tips.push('Clay soil retains water - avoid overwatering to prevent root rot');
+            }
+            
+            tips.push('Always water seedlings gently to avoid washing away seeds');
+            tips.push('Best time to water is early morning or late afternoon');
+            
+            return tips;
+        }
+
+        // Apply recommended soil mix
+        document.getElementById('applySoilRecommendation').addEventListener('click', function() {
+            if (recommendedSoilMix) {
+                document.getElementById('soil_mix_sand_percent').value = recommendedSoilMix.sand;
+                document.getElementById('soil_mix_loam_percent').value = recommendedSoilMix.loam;
+                document.getElementById('soil_mix_compost_percent').value = recommendedSoilMix.compost;
+                updateSoilMixTotal();
+            }
+        });
+
+        // Get current location with retry
+        let locationAttempt = 0;
+        const maxAttempts = 2;
+
+        function attemptGetLocation(btn, statusElement, latInput, lonInput, useHighAccuracy) {
+            locationAttempt++;
+            
+            const options = {
+                enableHighAccuracy: useHighAccuracy,
+                timeout: useHighAccuracy ? 30000 : 15000, // Longer timeout
+                maximumAge: useHighAccuracy ? 0 : 5000
+            };
+
+            if (useHighAccuracy) {
+                statusElement.textContent = 'Getting precise location... (this may take 30 seconds)';
+            } else {
+                statusElement.textContent = 'Getting approximate location...';
+            }
+
+            navigator.geolocation.getCurrentPosition(
+                function(position) {
+                    const lat = position.coords.latitude.toFixed(6);
+                    const lon = position.coords.longitude.toFixed(6);
+                    
+                    latInput.value = lat;
+                    lonInput.value = lon;
+                    statusElement.textContent = `Location acquired (Accuracy: ±${Math.round(position.coords.accuracy)}m)`;
+                    statusElement.classList.remove('text-blue-600');
+                    statusElement.classList.add('text-green-600');
+                    btn.disabled = false;
+                    btn.querySelector('span:last-child').textContent = 'Get Location';
+                    locationAttempt = 0;
+                    
+                    // Analyze location and provide recommendations
+                    analyzeLocation(parseFloat(lat), parseFloat(lon));
+                },
+                function(error) {
+                    if (error.code === error.TIMEOUT && locationAttempt < maxAttempts) {
+                        // Retry with lower accuracy for faster results
+                        statusElement.textContent = 'High accuracy timed out, trying faster method...';
+                        setTimeout(() => attemptGetLocation(btn, statusElement, latInput, lonInput, false), 500);
+                        return;
+                    }
+
+                    let errorMessage = 'Unable to get location. ';
+                    switch(error.code) {
+                        case error.PERMISSION_DENIED:
+                            errorMessage += 'Please allow location access in your browser settings.';
+                            break;
+                        case error.POSITION_UNAVAILABLE:
+                            errorMessage += 'Location service unavailable. Please check your device settings.';
+                            break;
+                        case error.TIMEOUT:
+                            errorMessage += 'Request timed out. You can manually enter coordinates below.';
+                            // Show manual input option
+                            makeCoordinatesEditable();
+                            break;
+                        default:
+                            errorMessage += 'An unknown error occurred.';
+                    }
+                    statusElement.textContent = errorMessage;
+                    statusElement.classList.remove('text-blue-600', 'text-green-600');
+                    statusElement.classList.add('text-red-600');
+                    btn.disabled = false;
+                    btn.querySelector('span:last-child').textContent = 'Retry Location';
+                    locationAttempt = 0;
+                },
+                options
+            );
+        }
+
+        function makeCoordinatesEditable() {
+            const latInput = document.getElementById('latitude');
+            const lonInput = document.getElementById('longitude');
+            latInput.readOnly = false;
+            lonInput.readOnly = false;
+            latInput.placeholder = 'Enter latitude (e.g., -1.286389)';
+            lonInput.placeholder = 'Enter longitude (e.g., 36.817223)';
+            
+            // Add manual analysis button
+            if (!document.getElementById('manualAnalyzeBtn')) {
+                const analyzeBtn = document.createElement('button');
+                analyzeBtn.id = 'manualAnalyzeBtn';
+                analyzeBtn.type = 'button';
+                analyzeBtn.className = 'mt-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700';
+                analyzeBtn.innerHTML = '<span class="material-symbols-outlined text-sm">analytics</span> Analyze Location';
+                analyzeBtn.onclick = function() {
+                    const lat = parseFloat(latInput.value);
+                    const lon = parseFloat(lonInput.value);
+                    if (!isNaN(lat) && !isNaN(lon)) {
+                        analyzeLocation(lat, lon);
+                    } else {
+                        alert('Please enter valid coordinates');
+                    }
+                };
+                document.getElementById('locationStatus').parentElement.appendChild(analyzeBtn);
+            }
+        }
+
+        document.getElementById('getLocationBtn').addEventListener('click', function() {
+            const statusElement = document.getElementById('locationStatus');
+            const latInput = document.getElementById('latitude');
+            const lonInput = document.getElementById('longitude');
+            const btn = this;
+            
+            if (!navigator.geolocation) {
+                statusElement.textContent = 'Geolocation is not supported by your browser. Please enter coordinates manually.';
+                statusElement.classList.add('text-red-600');
+                makeCoordinatesEditable();
+                return;
+            }
+
+            btn.disabled = true;
+            btn.querySelector('span:last-child').textContent = 'Getting location...';
+            statusElement.textContent = 'Requesting location access...';
+            statusElement.classList.remove('text-red-600', 'text-green-600');
+            statusElement.classList.add('text-blue-600');
+            locationAttempt = 0;
+
+            attemptGetLocation(btn, statusElement, latInput, lonInput, true);
+        });
+
+        // Calculate soil mix total
+        const soilInputs = ['soil_mix_sand_percent', 'soil_mix_loam_percent', 'soil_mix_compost_percent'];
+        soilInputs.forEach(id => {
+            document.getElementById(id).addEventListener('input', updateSoilMixTotal);
+        });
+
+        function updateSoilMixTotal() {
+            const total = soilInputs.reduce((sum, id) => {
+                const value = parseFloat(document.getElementById(id).value) || 0;
+                return sum + value;
+            }, 0);
+            
+            const totalElement = document.getElementById('soilMixTotal');
+            totalElement.textContent = `Current total: ${total}%`;
+            
+            if (total === 100) {
+                totalElement.classList.remove('text-gray-600', 'text-red-600');
+                totalElement.classList.add('text-green-600');
+            } else if (total > 100) {
+                totalElement.classList.remove('text-gray-600', 'text-green-600');
+                totalElement.classList.add('text-red-600');
+            } else {
+                totalElement.classList.remove('text-green-600', 'text-red-600');
+                totalElement.classList.add('text-gray-600');
+            }
+        }
+
+        // Handle form submission
+        document.getElementById('nurseryForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const errorDiv = document.getElementById('errorMessage');
+            const successDiv = document.getElementById('successMessage');
+            const errorText = document.getElementById('errorText');
+            
+            errorDiv.classList.add('hidden');
+            successDiv.classList.add('hidden');
+
+            // Get form data
+            const formData = {
+                nursery_name: document.getElementById('nursery_name').value,
+                location_name: document.getElementById('location_name').value,
+                latitude: parseFloat(document.getElementById('latitude').value) || null,
+                longitude: parseFloat(document.getElementById('longitude').value) || null,
+                total_capacity: parseInt(document.getElementById('total_capacity').value),
+                total_beds: parseInt(document.getElementById('total_beds').value),
+                soil_mix_sand_percent: parseInt(document.getElementById('soil_mix_sand_percent').value) || null,
+                soil_mix_loam_percent: parseInt(document.getElementById('soil_mix_loam_percent').value) || null,
+                soil_mix_compost_percent: parseInt(document.getElementById('soil_mix_compost_percent').value) || null,
+                watering_schedule: document.getElementById('watering_frequency').value
+            };
+
+            // Validate soil mix if provided
+            const soilTotal = (formData.soil_mix_sand_percent || 0) + 
+                            (formData.soil_mix_loam_percent || 0) + 
+                            (formData.soil_mix_compost_percent || 0);
+            
+            if (soilTotal > 0 && soilTotal !== 100) {
+                errorText.textContent = 'Soil mix percentages must total 100%';
+                errorDiv.classList.remove('hidden');
+                return;
+            }
+
+            // Get auth token
+            const token = localStorage.getItem('token');
+            if (!token) {
+                window.location.href = '/login.html';
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/nurseries', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    successDiv.classList.remove('hidden');
+                    document.getElementById('nurseryForm').reset();
+                    updateSoilMixTotal();
+                    
+                    // Redirect after 2 seconds
+                    setTimeout(() => {
+                        window.location.href = '/nursery.html';
+                    }, 2000);
+                } else {
+                    errorText.textContent = data.error || 'Failed to add nursery';
+                    errorDiv.classList.remove('hidden');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                errorText.textContent = 'Network error. Please try again.';
+                errorDiv.classList.remove('hidden');
+            }
+        });
+
+        // Check authentication using auth.js
+        window.addEventListener('DOMContentLoaded', () => {
+            if (!auth || !auth.isAuthenticated()) {
+                window.location.href = '/login.html';
+            }
+        });
+    </script>
+    <script src="/js/auth.js"></script>
+    <script>
+        // Double-check auth after auth.js loads
+        if (!auth.isAuthenticated()) {
+            window.location.href = '/login.html';
+        }
+    </script>
+</body>
+</html>

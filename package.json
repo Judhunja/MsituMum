@@ -1,0 +1,40 @@
+{
+  "name": "msitumum-forest-restoration",
+  "version": "1.0.0",
+  "description": "MsituMum - An Integrated Forest Restoration Intelligence System",
+  "main": "server/index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "nodemon server/index.js",
+    "client": "cd client && python -m http.server 3000",
+    "start": "node server/index.js",
+    "init-db": "node server/scripts/initDatabase.js",
+    "generate-data": "node server/scripts/generateDummyData.js",
+    "reset-db": "npm run init-db && npm run generate-data"
+  },
+  "keywords": [
+    "forest",
+    "restoration",
+    "agriculture",
+    "biodiversity",
+    "sustainability"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.84.0",
+    "bcryptjs": "^2.4.3",
+    "better-sqlite3": "^9.2.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "express": "^4.18.2",
+    "express-validator": "^7.0.1",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "nodemon": "^3.0.1"
+  }
+}
