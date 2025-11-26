@@ -21,7 +21,8 @@ export default function Register() {
     setLoading(true);
 
     try {
-      const { error } = await supabase.auth.signUp({
+      // Step 1: Create auth user
+      const { data: authData, error: authError } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
         options: {
@@ -32,12 +33,33 @@ export default function Register() {
         },
       });
 
-      if (error) throw error;
+      if (authError) throw authError;
+
+      // Step 2: Insert into users table (only if auth succeeded)
+      if (authData?.user) {
+        const { error: dbError } = await supabase
+          .from('users')
+          .insert([
+            {
+              id: authData.user.id,
+              username: formData.username,
+              email: formData.email,
+              full_name: formData.fullName,
+            },
+          ]);
+
+        if (dbError) {
+          console.error('Database error saving new user:', dbError);
+          // Don't throw - auth account is created, just log the error
+          // The user can still login, data can be synced later
+        }
+      }
       
-      setSuccess('Registration successful! Please check your email to verify your account.');
+      setSuccess('Registration successful! Redirecting to login...');
       setTimeout(() => navigate('/login'), 2000);
     } catch (error) {
-      setError(error.message);
+      console.error('Registration error:', error);
+      setError(error.message || 'Registration failed. Please try again.');
     } finally {
       setLoading(false);
     }
