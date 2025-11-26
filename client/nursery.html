@@ -3,26 +3,7 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Nursery Management - MsituMum</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
-<script src="https://cdn.tailwindcss.com"></script>
-<script>
-tailwind.config = {
-  theme: {
-    extend: {
-      colors: {
-        "primary": "#13ec13",
-        "green-dark": "#1a3a1a",
-        "green-medium": "#4c854c",
-      },
-      fontFamily: {
-        "display": ["Inter", "sans-serif"]
-      }
-    }
-  }
-}
-</script>
+<script type="module" src="/main.js"></script>
 </head>
 <body class="font-display bg-gray-50">
 <!-- Include same sidebar as index.html -->
@@ -41,10 +22,7 @@ tailwind.config = {
 <span class="material-symbols-outlined">dashboard</span>
 <p class="text-sm font-medium">Dashboard</p>
 </a>
-<a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/10 text-white" href="sites.html">
-<span class="material-symbols-outlined">map</span>
-<p class="text-sm font-medium">Sites</p>
-</a>
+
 <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-green-700 text-white" href="nursery.html">
 <span class="material-symbols-outlined">local_florist</span>
 <p class="text-sm font-bold">Nurseries</p>
@@ -100,7 +78,7 @@ tailwind.config = {
 </main>
 </div>
 
-<script src="/js/auth.js"></script>
+<script type="module" src="/js/auth.js"></script>
 <script>
 async function loadNurseries() {
   try {
@@ -156,10 +134,5 @@ function filterStage(stage) {
 
 document.addEventListener('DOMContentLoaded', loadNurseries);
 </script>
-<script>
-  // Check authentication after auth.js loads
-  if (!auth.isAuthenticated()) {
-      window.location.href = '/login.html';
-  }
-</script>
+<script type="module" src="/js/check-auth.js"></script>
 </body></html>

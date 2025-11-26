@@ -1,3 +1,6 @@
+import { apiCall, formatNumber, formatPercentage, formatDate, showNotification } from './auth.js';
+import Chart from 'chart.js/auto';
+
 // Dashboard functionality
 let survivalChart = null;
 let speciesChart = null;

@@ -1,7 +1,10 @@
-const API_BASE_URL = 'http://localhost:5000/api';
+// Use environment-based API URL
+const API_BASE_URL = window.location.hostname === 'localhost' 
+  ? 'http://localhost:5000/api' 
+  : '/api';
 
 // Authentication utilities
-const auth = {
+export const auth = {
   getToken() {
     return localStorage.getItem('token');
   },
@@ -47,8 +50,12 @@ const auth = {
   }
 };
 
-// API call wrapper
-async function apiCall(endpoint, options = {}) {
+// Simple cache for API responses
+const apiCache = new Map();
+const CACHE_DURATION = 30000; // 30 seconds
+
+// API call wrapper with caching
+export async function apiCall(endpoint, options = {}) {
   const token = auth.getToken();
   const headers = {
     'Content-Type': 'application/json',
@@ -57,6 +64,15 @@ async function apiCall(endpoint, options = {}) {
 
   if (token) {
     headers['Authorization'] = `Bearer ${token}`;
+  }
+
+  // Check cache for GET requests
+  const cacheKey = `${endpoint}${JSON.stringify(options)}`;
+  if (!options.method || options.method === 'GET') {
+    const cached = apiCache.get(cacheKey);
+    if (cached && Date.now() - cached.timestamp < CACHE_DURATION) {
+      return cached.data;
+    }
   }
 
   try {
@@ -76,6 +92,11 @@ async function apiCall(endpoint, options = {}) {
       throw new Error(data.error || 'API request failed');
     }
 
+    // Cache successful GET requests
+    if (!options.method || options.method === 'GET') {
+      apiCache.set(cacheKey, { data, timestamp: Date.now() });
+    }
+
     return data;
   } catch (error) {
     console.error('API Error:', error);
@@ -84,28 +105,28 @@ async function apiCall(endpoint, options = {}) {
 }
 
 // Utility functions
-function formatNumber(num) {
+export function formatNumber(num) {
   if (!num) return '0';
   return num.toLocaleString();
 }
 
-function formatDate(dateString) {
+export function formatDate(dateString) {
   if (!dateString) return '';
   const date = new Date(dateString);
   return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
 }
 
-function formatPercentage(value, decimals = 1) {
+export function formatPercentage(value, decimals = 1) {
   if (value === null || value === undefined) return '--';
   return `${Number(value).toFixed(decimals)}%`;
 }
 
-function showNotification(message, type = 'info') {
+export function showNotification(message, type = 'info') {
   // Simple notification (can be enhanced with a library)
   alert(message);
 }
 
-function logout() {
+export function logout() {
   auth.logout();
 }
 
@@ -185,6 +206,16 @@ if (document.getElementById('registerForm')) {
       submitButton.textContent = originalText;
     }
   });
+}
+
+// Export auth to window for inline scripts
+if (typeof window !== 'undefined') {
+  window.auth = auth;
+  window.apiCall = apiCall;
+  window.formatNumber = formatNumber;
+  window.formatDate = formatDate;
+  window.formatPercentage = formatPercentage;
+  window.showNotification = showNotification;
 }
 
 // DO NOT auto-check auth here - let pages control when to check

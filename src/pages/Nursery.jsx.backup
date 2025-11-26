@@ -1,0 +1,116 @@
+import React, { useState, useEffect } from 'react';
+import Sidebar from '../components/Sidebar';
+
+export default function Nursery() {
+  const [nurseries, setNurseries] = useState([]);
+  const [activeFilter, setActiveFilter] = useState('all');
+
+  useEffect(() => {
+    loadNurseries();
+  }, []);
+
+  const loadNurseries = () => {
+    // Dummy nursery data
+    const dummyNurseries = [
+      { id: 1, nursery_name: 'Wangari Maathai Memorial Nursery', total_seedlings: 5000, total_capacity: 10000, species_count: 8 },
+      { id: 2, nursery_name: 'Green Valley Tree Nursery', total_seedlings: 3200, total_capacity: 5000, species_count: 6 },
+      { id: 3, nursery_name: 'Karura Forest Seedlings', total_seedlings: 4500, total_capacity: 8000, species_count: 10 },
+      { id: 4, nursery_name: 'Mount Kenya Nursery Hub', total_seedlings: 2800, total_capacity: 6000, species_count: 5 },
+      { id: 5, nursery_name: 'Rift Valley Tree Farm', total_seedlings: 6200, total_capacity: 12000, species_count: 12 },
+      { id: 6, nursery_name: 'Coastal Green Nursery', total_seedlings: 1500, total_capacity: 4000, species_count: 4 },
+    ];
+    setNurseries(dummyNurseries);
+  };
+
+  return (
+    <div className="flex min-h-screen">
+      <Sidebar />
+      <main className="flex-1 p-8 bg-gray-50">
+        <header className="flex justify-between items-center mb-6">
+          <div>
+            <h1 className="text-3xl font-black text-gray-900">Nursery Management</h1>
+            <p className="text-gray-600">Visualize and manage your nursery beds and seedlings.</p>
+          </div>
+          <button className="flex items-center gap-2 bg-green-700 text-white px-4 py-2 rounded-lg hover:bg-green-800">
+            <span className="material-symbols-outlined">add</span>
+            <span>Add New Nursery</span>
+          </button>
+        </header>
+
+        <div className="bg-white rounded-xl border border-gray-200">
+          <div className="flex items-center justify-between p-4 border-b">
+            <div className="flex gap-2">
+              <button className="p-2 text-gray-700 rounded-lg hover:bg-gray-100">
+                <span className="material-symbols-outlined">search</span>
+              </button>
+              <button className="p-2 text-gray-700 rounded-lg hover:bg-gray-100">
+                <span className="material-symbols-outlined">filter_list</span>
+              </button>
+            </div>
+            <button className="flex items-center gap-2 bg-primary text-gray-900 px-4 py-2 rounded-lg hover:opacity-90">
+              <span className="material-symbols-outlined">description</span>
+              <span className="text-sm font-bold">Generate Report</span>
+            </button>
+          </div>
+
+          <div className="flex gap-3 p-4 border-b overflow-x-auto">
+            <button 
+              className={`px-4 py-2 rounded-full text-sm font-medium ${activeFilter === 'all' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-700 hover:bg-green-100'}`}
+              onClick={() => setActiveFilter('all')}
+            >
+              All Beds
+            </button>
+            <button 
+              className={`px-4 py-2 rounded-full text-sm font-medium ${activeFilter === 'sowing' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-700 hover:bg-green-100'}`}
+              onClick={() => setActiveFilter('sowing')}
+            >
+              Sowing
+            </button>
+            <button 
+              className={`px-4 py-2 rounded-full text-sm font-medium ${activeFilter === 'germination' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-700 hover:bg-green-100'}`}
+              onClick={() => setActiveFilter('germination')}
+            >
+              Germination
+            </button>
+            <button 
+              className={`px-4 py-2 rounded-full text-sm font-medium ${activeFilter === 'hardening' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-700 hover:bg-green-100'}`}
+              onClick={() => setActiveFilter('hardening')}
+            >
+              Hardening
+            </button>
+            <button 
+              className={`px-4 py-2 rounded-full text-sm font-medium ${activeFilter === 'ready' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-700 hover:bg-green-100'}`}
+              onClick={() => setActiveFilter('ready')}
+            >
+              Ready for Transplant
+            </button>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
+            {nurseries.length === 0 ? (
+              <div className="col-span-full text-center py-12 text-gray-500">No nurseries found. Add your first nursery!</div>
+            ) : (
+              nurseries.map(nursery => (
+                <div key={nursery.id} className="flex flex-col gap-3 rounded-lg border border-gray-200 p-3 hover:shadow-lg transition-all cursor-pointer">
+                  <div className="w-full bg-green-200 aspect-[4/3] rounded-lg flex items-center justify-center">
+                    <span className="material-symbols-outlined text-6xl text-green-700">local_florist</span>
+                  </div>
+                  <div className="flex flex-col gap-1">
+                    <p className="text-gray-900 text-base font-bold">{nursery.nursery_name}</p>
+                    <p className="text-gray-600 text-sm">Total: {nursery.total_seedlings.toLocaleString()} seedlings</p>
+                    <p className="text-gray-600 text-sm">Capacity: {nursery.total_capacity.toLocaleString()}</p>
+                    <div className="flex items-center gap-2 mt-1">
+                      <span className="inline-flex items-center rounded-md bg-green-100 px-2 py-1 text-xs font-medium text-green-700">
+                        {nursery.species_count} species
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+        </div>
+      </main>
+    </div>
+  );
+}
